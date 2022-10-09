@@ -1,11 +1,12 @@
 import express, { Application, Response, Request } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import chromium from "chrome-aws-lambda";
+
 import { getDataFromBandcamp } from "./utils/getDataFromBandcamp";
 import { ArrayIframesBandcamp } from "./@types/ArrayIframesBandcamp";
 import { puppeteerConfig } from "./config/puppeteerConfig";
 import { websitesUrl } from "./config/websitesUrl";
+import puppeteer from "puppeteer";
 const app: Application = express();
 
 dotenv.config({ path: ".env" });
@@ -16,7 +17,7 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 	const iframes: ArrayIframesBandcamp = [];
 	const { urlBandcamp } = websitesUrl;
 
-	const browser = await chromium.puppeteer.launch(await puppeteerConfig());
+	const browser = await puppeteer.launch(await puppeteerConfig());
 	const page = await browser.newPage();
 
 	await page.goto(urlBandcamp);
@@ -36,7 +37,7 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 
 		for (let i = 0; i <= tracksLength - 1; i++) {
 			const trackTitle = await page.evaluate((element) => {
-				return element?.innerText;
+				return (element as HTMLElement).innerText;
 			}, tracks[i]);
 			titlesAllTracks.push(trackTitle);
 		}
@@ -56,7 +57,7 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 		const inputElement = await page.$("input.embed_text");
 
 		const dataIframe = await page.evaluate((element) => {
-			return element?.value;
+			return (element as HTMLInputElement).value;
 		}, inputElement);
 
 		iframes.push({ iframeLink: dataIframe, mainTitles: titlesAllTracks });
