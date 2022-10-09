@@ -8,6 +8,8 @@ dotenv.config({ path: ".env" });
 
 app.use(cors());
 
+app.use(express.static("public"));
+
 app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 	const dataFromBandcamp = await getDataFromBandcamp();
 	res.send(dataFromBandcamp);
