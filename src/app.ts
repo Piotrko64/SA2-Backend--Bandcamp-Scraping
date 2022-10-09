@@ -74,6 +74,10 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 	res.send(iframes);
 });
 
+app.get("/", async (_req: Request, res: Response) => {
+	res.send("aa");
+});
+
 const PORT = process.env.PORT || 4040;
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
