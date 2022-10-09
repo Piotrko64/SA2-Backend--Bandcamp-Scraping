@@ -20,7 +20,9 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 	const browser = await puppeteer.launch(await puppeteerConfig());
 	const page = await browser.newPage();
 
-	await page.goto(urlBandcamp);
+	await page.goto(urlBandcamp, {
+		waitUntil: "networkidle2",
+	});
 
 	const allAlbumsUser = await page.$$("#music-grid > li > a");
 
@@ -62,7 +64,9 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 
 		iframes.push({ iframeLink: dataIframe, mainTitles: titlesAllTracks });
 
-		await page.goto(urlBandcamp);
+		await page.goto(urlBandcamp, {
+			waitUntil: "networkidle2",
+		});
 	}
 
 	await browser.close();
