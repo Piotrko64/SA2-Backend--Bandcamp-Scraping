@@ -1,5 +1,5 @@
-import chromium from "chrome-aws-lambda";
-import { Application, Response } from "express";
+import puppeteer from "puppeteer";
+
 import { ArrayIframesBandcamp } from "../@types/ArrayIframesBandcamp";
 import { puppeteerConfig } from "../config/puppeteerConfig";
 import { websitesUrl } from "../config/websitesUrl";
@@ -8,7 +8,7 @@ export async function getDataFromBandcamp() {
 	const iframes: ArrayIframesBandcamp = [];
 	const { urlBandcamp } = websitesUrl;
 
-	const browser = await chromium.puppeteer.launch(await puppeteerConfig());
+	const browser = await puppeteer.launch(await puppeteerConfig());
 	const page = await browser.newPage();
 
 	await page.goto(urlBandcamp, {
@@ -30,7 +30,7 @@ export async function getDataFromBandcamp() {
 
 		for (let i = 0; i <= tracksLength - 1; i++) {
 			const trackTitle = await page.evaluate((element) => {
-				return element?.innerText;
+				return (element as HTMLElement).innerText;
 			}, tracks[i]);
 			titlesAllTracks.push(trackTitle);
 		}
@@ -50,7 +50,7 @@ export async function getDataFromBandcamp() {
 		const inputElement = await page.$("input.embed_text");
 
 		const dataIframe = await page.evaluate((element) => {
-			return element?.value;
+			return (element as HTMLInputElement).value;
 		}, inputElement);
 
 		iframes.push({ iframeLink: dataIframe, mainTitles: titlesAllTracks });
