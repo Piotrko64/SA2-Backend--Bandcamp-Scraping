@@ -3,10 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { getDataFromBandcamp } from "./utils/getDataFromBandcamp";
-import { ArrayIframesBandcamp } from "./@types/ArrayIframesBandcamp";
-import { puppeteerConfig } from "./config/puppeteerConfig";
-import { websitesUrl } from "./config/websitesUrl";
-import puppeteer from "puppeteer";
+
 const app: Application = express();
 
 dotenv.config({ path: ".env" });
