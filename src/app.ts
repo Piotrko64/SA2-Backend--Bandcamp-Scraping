@@ -15,8 +15,13 @@ app.get("/", async (_req: Request, res: Response) => {
 });
 
 app.get("/dataBandcamp", async (_req: Request, res: Response) => {
-	const dataForIframes = await getDataFromBandcamp();
-	res.send(dataForIframes);
+	try {
+		const dataForIframes = await getDataFromBandcamp();
+		res.send(dataForIframes);
+	} catch (err) {
+		console.log(err);
+		res.send("problem");
+	}
 });
 
 const PORT = process.env.PORT || 4040;
