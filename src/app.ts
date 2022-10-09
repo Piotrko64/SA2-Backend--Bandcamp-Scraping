@@ -20,7 +20,7 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 		res.send(dataForIframes);
 	} catch (err) {
 		console.log(err);
-		res.send("problem");
+		res.send(null);
 	}
 });
 
