@@ -8,6 +8,7 @@ import { delay } from "./delay";
 export async function getDataFromBandcamp() {
 	const iframes: ArrayIframesBandcamp = [];
 	const { urlBandcamp } = websitesUrl;
+	console.log(urlBandcamp);
 	try {
 		const browser = await puppeteer.launch(await puppeteerConfig());
 		const page = await browser.newPage();
@@ -16,7 +17,7 @@ export async function getDataFromBandcamp() {
 
 		const allAlbumsUser = await page.$$("#music-grid > li > a");
 
-		for (let i = 0; i <= allAlbumsUser.length - 1; i++) {
+		for (let i = 0; i <= 1; i++) {
 			const allAlbums = await page.$$("#music-grid > li > a");
 
 			await allAlbums[i].click();
@@ -51,7 +52,6 @@ export async function getDataFromBandcamp() {
 			const inputElement = await page.$("input.embed_text");
 
 			const dataIframe = await page.evaluate((element) => {
-				console.log(element);
 				return (element as HTMLInputElement).value;
 			}, inputElement);
 
