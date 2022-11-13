@@ -11,5 +11,5 @@ interface Network {
 }
 
 export const configNetwork: Network = {
-	waitUntil: "load",
+	waitUntil: "networkidle2",
 };
