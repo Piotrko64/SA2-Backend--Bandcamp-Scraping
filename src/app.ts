@@ -2,7 +2,7 @@ import express, { Application, Response, Request } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import { getDataFromBandcamp } from "./utils/getDataFromBandcamp";
+import { getDataFromBandcamp } from "./helpers/getDataFromBandcamp";
 
 const app: Application = express();
 
@@ -20,11 +20,12 @@ app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 		res.send(dataForIframes);
 	} catch (err) {
 		console.log(err);
-		res.send(null);
+		res.status(417).json(null);
 	}
 });
 
 const PORT = process.env.PORT || 4040;
+
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
