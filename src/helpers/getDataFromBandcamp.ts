@@ -39,6 +39,8 @@ export async function getDataFromBandcamp() {
 			const buttonEmbed = await page.$(".embed-other-services.panel-section  > a");
 			await buttonEmbed?.click();
 
+			await page.waitForSelector(".sizechoice.large > .sizepreview");
+
 			const bigSizeElement = await page.$(".sizechoice.large > .sizepreview");
 			await bigSizeElement?.click();
 
@@ -60,6 +62,7 @@ export async function getDataFromBandcamp() {
 
 		return iframes;
 	} catch (err) {
+		console.log(err);
 		return null;
 	}
 }
