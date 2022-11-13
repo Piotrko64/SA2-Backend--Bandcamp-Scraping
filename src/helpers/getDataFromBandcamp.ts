@@ -17,7 +17,7 @@ export async function getDataFromBandcamp() {
 
 		const allAlbumsUser = await page.$$("#music-grid > li > a");
 
-		for (let i = 0; i <= 1; i++) {
+		for (let i = 0; i <= allAlbumsUser.length - 1; i++) {
 			const allAlbums = await page.$$("#music-grid > li > a");
 
 			await allAlbums[i].click();
@@ -38,7 +38,7 @@ export async function getDataFromBandcamp() {
 			const shareButton = await page.$(".share-embed > .share-embed-label > button");
 			await shareButton?.click();
 
-			await delay(1000);
+			await delay(500);
 
 			const buttonEmbed = await page.$(".embed-other-services.panel-section  > a");
 			await buttonEmbed?.click();
