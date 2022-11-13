@@ -8,7 +8,7 @@ import { delay } from "./delay";
 export async function getDataFromBandcamp() {
 	const iframes: ArrayIframesBandcamp = [];
 	const { urlBandcamp } = websitesUrl;
-	console.log(urlBandcamp);
+
 	try {
 		const browser = await puppeteer.launch(await puppeteerConfig());
 		const page = await browser.newPage();
@@ -38,7 +38,7 @@ export async function getDataFromBandcamp() {
 			const shareButton = await page.$(".share-embed > .share-embed-label > button");
 			await shareButton?.click();
 
-			await delay(500);
+			await delay(400);
 
 			const buttonEmbed = await page.$(".embed-other-services.panel-section  > a");
 			await buttonEmbed?.click();
@@ -55,7 +55,6 @@ export async function getDataFromBandcamp() {
 				return (element as HTMLInputElement).value;
 			}, inputElement);
 
-			console.log(i);
 			iframes.push({ iframeLink: dataIframe, mainTitles: titlesAllTracks });
 
 			await page.goto(urlBandcamp, configNetwork);

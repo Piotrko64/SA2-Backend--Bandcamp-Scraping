@@ -17,7 +17,7 @@ app.get("/", async (_req: Request, res: Response) => {
 app.get("/dataBandcamp", async (_req: Request, res: Response) => {
 	try {
 		const dataForIframes = await getDataFromBandcamp();
-		res.send(dataForIframes);
+		res.json(dataForIframes);
 	} catch (err) {
 		console.log(err);
 		res.status(417).json("ERROR");
