@@ -8,10 +8,8 @@ export const puppeteerConfig = async () => ({
 
 interface Network {
 	waitUntil: PuppeteerLifeCycleEvent;
-	timeout: number;
 }
 
 export const configNetwork: Network = {
 	waitUntil: "load",
-	timeout: 0,
 };

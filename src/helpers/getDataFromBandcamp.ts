@@ -55,6 +55,7 @@ export async function getDataFromBandcamp() {
 				return (element as HTMLInputElement).value;
 			}, inputElement);
 
+			console.log(i);
 			iframes.push({ iframeLink: dataIframe, mainTitles: titlesAllTracks });
 
 			await page.goto(urlBandcamp, configNetwork);
