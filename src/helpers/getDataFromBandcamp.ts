@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 import { ArrayIframesBandcamp } from "../@types/ArrayIframesBandcamp";
 import { configNetwork, puppeteerConfig } from "../config/puppeteerConfig";
 import { websitesUrl } from "../config/websitesUrl";
+import { delay } from "./delay";
 
 export async function getDataFromBandcamp() {
 	const iframes: ArrayIframesBandcamp = [];
@@ -33,15 +34,15 @@ export async function getDataFromBandcamp() {
 				titlesAllTracks.push(trackTitle);
 			}
 
-			const shareButton = await page.$(".share-embed");
+			const shareButton = await page.$(".share-embed > .share-embed-label > button");
 			await shareButton?.click();
+
+			await delay(1000);
 
 			const buttonEmbed = await page.$(".embed-other-services.panel-section  > a");
 			await buttonEmbed?.click();
 
-			await page.waitForSelector(".sizechoice.large > .sizepreview");
-
-			const bigSizeElement = await page.$(".sizechoice.large > .sizepreview");
+			const bigSizeElement = await page.$(".sizechoice.large > .sizepreview > img");
 			await bigSizeElement?.click();
 
 			const checkbox = await page.$('label > input[data-bind="checked: show_tracklist"]');
@@ -50,6 +51,7 @@ export async function getDataFromBandcamp() {
 			const inputElement = await page.$("input.embed_text");
 
 			const dataIframe = await page.evaluate((element) => {
+				console.log(element);
 				return (element as HTMLInputElement).value;
 			}, inputElement);
 

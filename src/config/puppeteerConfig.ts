@@ -2,7 +2,7 @@ import { PuppeteerLifeCycleEvent } from "puppeteer";
 
 export const puppeteerConfig = async () => ({
 	ignoreDefaultArgs: ["--disable-extensions"],
-	headless: true,
+	headless: false,
 	args: ["--no-sandbox"],
 });
 
